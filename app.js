@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 
 app.get('/coops', async (req, res) => {
   const coops = await Coop.find();
-  res.render('coops/index');
+  res.render('coops/index', {coops});
 });
  
 // Start Server /////////////////////////

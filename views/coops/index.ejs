@@ -7,5 +7,10 @@
 </head>
 <body>
     <h1>All Coops</h1>
+    <ul>
+        <% for (let coop of coops) { %> 
+            <li><%= coop.name %> </li>
+        <% } %> 
+    </ul>
 </body>
 </html>
