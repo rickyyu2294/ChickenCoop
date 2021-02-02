@@ -6,4 +6,4 @@ const CoopSchema = new Schema({
     description: String,
 });
 
-module.exports = mongoose.Model('Coop', CoopSchema);
+module.exports = mongoose.model('Coop', CoopSchema);
