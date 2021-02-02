@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const CoopSchema = new Schema({
     name: String,
+    image: String,
     description: String,
 });
 
