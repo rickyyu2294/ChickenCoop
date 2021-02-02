@@ -1,17 +1,17 @@
 <% layout('layouts/boilerplate') %> 
-<h1><%= coop.name %> </h1>
 
-<img src="<%= coop.image %> " alt="">
-
-<h2><%= coop.description %> </h2>
-
-<div><a href="/coops/<%= coop._id %>/edit">Edit</a></div>
-
-
-<form action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">
-    <button>Delete</button>
-</form>
-
-<footer>
-    <a href="/coops">All Coops</a>
-</footer>
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card my-3" style="width: 18rem;">
+            <img src="<%= coop.image %>" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= coop.name %></h5>
+                <p class="card-text"><%= coop.description %></p>
+                <a class="btn btn-primary" href="/coops/<%= coop._id %>/edit">Edit</a>
+                <form class="d-inline" action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+          </div>        
+    </div>
+</div>

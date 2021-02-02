@@ -1,20 +1,29 @@
 <% layout('layouts/boilerplate') %> 
-<h1>Edit</h1>
-<form action="/coops/<%= coop._id %>?_method=PUT" method="POST">
-    <div>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="coop[name]" value="<%= coop.name %>">
-
-        <label for="image">Image</label>
-        <input type="text" id="image" name="coop[image]" value="<% coop.image %> ">
-
-        <label for="description">Description</label>
-        <input type="text" id="description" name="coop[description]" value="<%= coop.description %>">
-
-        <button>Update</button>
+<div class="row">
+    <h1 class="text-center">Edit Coop</h1>
+    <div class="col-6 offset-3">
+        <form action="/coops/<%= coop._id %>?_method=PUT" method="POST">
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="coop[name]" value="<%= coop.name %>">
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label" for="image">Image</label>
+                    <input class="form-control" type="text" id="image" name="coop[image]" value="<%= coop.image %>">
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="coop[description]"><%= coop.description %>"</textarea>
+                </div>
+        
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+                
+            </div>
+        </form>
     </div>
-</form>
-
-<div>
-    <a href="/coops/<%= coop._id %>">Back to Coop</a>
 </div>
