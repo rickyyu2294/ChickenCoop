@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Coop</title>
+</head>
+<body>
+    <h1>Edit</h1>
+    <form action="/coops/<%= coop._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="coop[name]" value="<%= coop.name %>">
+
+            <label for="description">Description</label>
+            <input type="text" id="description" name="coop[description]" value="<%= coop.description %>">
+
+            <button>Update</button>
+        </div>
+    </form>
+
+    <div>
+        <a href="/coops/<%= coop._id %>">Back to Coop</a>
+    </div>
+</body>
+</html>

@@ -9,6 +9,13 @@
     <h1><%= coop.name %> </h1>
     <h2><%= coop.description %> </h2>
 
+    <div><a href="/coops/<%= coop._id %>/edit">Edit</a></div>
+
+
+    <form action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">
+        <button>Delete</button>
+    </form>
+
     <footer>
         <a href="/coops">All Coops</a>
     </footer>

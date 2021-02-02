@@ -1,5 +1,6 @@
-const express = require('express')
+;const express = require('express')
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 const ejs = require('ejs');
 const path = require('path');
 const Coop = require("./models/coop")
@@ -19,7 +20,7 @@ db.once("open", () => {
 const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true}));
 
 // Routes /////////////////////////
@@ -48,8 +49,28 @@ app.post('/coops', async (req, res) => {
 
 // Show
 app.get('/coops/:id', async (req, res) => {
-  const coop = await Coop.findById(req.params.id)
+  const coop = await Coop.findById(req.params.id);
   res.render('coops/show', {coop});
+});
+
+// Edit
+app.get('/coops/:id/edit', async (req, res) => {
+  const coop = await Coop.findById(req.params.id);
+  res.render('coops/edit', {coop});
+});
+
+app.put('/coops/:id', async (req, res) => {
+  const {id} = req.params;
+  const coop = await Coop.findByIdAndUpdate(id, {...req.body.coop});
+  res.redirect(`/coops/${coop._id}`);
+});
+
+// Delete
+app.delete('/coops/:id/delete', async (req, res) => {
+  const {id} = req.params;
+  await Coop.findByIdAndDelete(id);
+
+  res.redirect('/coops');
 });
  
 // Start Server /////////////////////////
