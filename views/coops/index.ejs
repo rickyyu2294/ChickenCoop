@@ -9,7 +9,7 @@
     <h1>All Coops</h1>
     <ul>
         <% for (let coop of coops) { %> 
-            <li><%= coop.name %> </li>
+            <li> <a href="coops/<%=coop._id%>"><%= coop.name %></a> </li>
         <% } %> 
     </ul>
 </body>

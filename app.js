@@ -26,9 +26,21 @@ app.get('/', function (req, res) {
   res.render('home');
 })
 
+// Index
 app.get('/coops', async (req, res) => {
   const coops = await Coop.find();
   res.render('coops/index', {coops});
+});
+
+// New
+app.post('/coops/new', async (req, res) => {
+  res.render('coops/new');
+});
+
+// Show
+app.get('/coops/:id', async (req, res) => {
+  const coop = await Coop.findById(req.params.id)
+  res.render('coops/show', {coop});
 });
  
 // Start Server /////////////////////////
