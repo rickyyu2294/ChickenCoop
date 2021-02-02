@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose');
 const ejs = require('ejs');
 const path = require('path');
-const ChickenCoop = require("./models/chickenCoop")
+const Coop = require("./models/chickenCoop")
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParse: true,
@@ -25,10 +25,10 @@ app.get('/', function (req, res) {
 })
 
 app.get('/chickencoop', (req, res) => {
-  const coop = new ChickenCoop{
+  const coop = new Coop ({
     name = 'MyFirstCoop',
     description = 'where my chickens live'
-  }
+  });
 
   await coop.save();
   res.send(coop);
