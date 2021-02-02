@@ -20,6 +20,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(express.urlencoded({ extended: true}));
+
 // Routes /////////////////////////
 
 app.get('/', function (req, res) {
@@ -33,8 +35,15 @@ app.get('/coops', async (req, res) => {
 });
 
 // New
-app.post('/coops/new', async (req, res) => {
+app.get('/coops/new', async (req, res) => {
   res.render('coops/new');
+});
+
+app.post('/coops', async (req, res) => {
+  const coop = new Coop(req.body.coop);
+  await coop.save();
+
+  res.redirect(`/coops/${coop._id}`);
 });
 
 // Show
