@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejs = require('ejs');
 const path = require('path');
-const Coop = require("./models/coop")
+const Coop = require("./models/coop");
+const ejsMate = require('ejs-mate');
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParse: true,
@@ -18,6 +19,7 @@ db.once("open", () => {
 });
 
 const app = express();
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride('_method'));

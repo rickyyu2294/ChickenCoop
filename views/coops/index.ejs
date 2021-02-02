@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coops</title>
-</head>
-<body>
-    <h1>Coops</h1>
-    <ul>
-        <% for (let coop of coops) { %> 
-            <li> <a href="coops/<%=coop._id%>"><%= coop.name %></a> </li>
-        <% } %> 
-    </ul>
+<% layout('layouts/boilerplate') %> 
+<h1>Coops</h1>
+<ul>
+    <% for (let coop of coops) { %> 
+        <li> <a href="coops/<%=coop._id%>"><%= coop.name %></a> </li>
+    <% } %> 
+</ul>
 
-    <div>
-        <a href="/coops/new">Add Coop</a>
-    </div>
-</body>
-</html>
+<div>
+    <a href="/coops/new">Add Coop</a>
+</div>
