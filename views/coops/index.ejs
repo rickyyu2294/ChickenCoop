@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') %> 
+<h1>Coops</h1>
+<% for (let coop of coops) { %> 
+    <div class="card my-3">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="img-fluid" src="<%= coop.image %> " alt="">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><%= coop.name %> </h5>
+                    <p class="card-text"><%= coop.description %> </p>
+
+                    <a href="/coops/<%= coop._id %>" class="btn btn-primary">More Info </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %> 
+
+<div>
+    <a href="/coops/new">Add Coop</a>
+</div>
