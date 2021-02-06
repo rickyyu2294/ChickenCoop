@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejs = require('ejs');
 const path = require('path');
-const Coop = require("./models/coop");
+const Coop = require("./models/coopModel");
 const ejsMate = require('ejs-mate');
-const CoopRoutes = require('./routes/coops.js');
+const CoopRoutes = require('./routes/coopsRoutes.js');
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParse: true,

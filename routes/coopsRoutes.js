@@ -1,6 +1,6 @@
 const express = require('express');
-const Coop = require('../models/coop')
-const Chicken = require('../models/chicken')
+const Coop = require('../models/coopModel')
+const Chicken = require('../models/chickenModel')
 const router = express.Router();
 
 // Index
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 // New
 router.get('/new', async (req, res) => {
-    res.render('/new');
+    res.render('coops/new');
 });
 
 router.post('/', async (req, res) => {
@@ -40,13 +40,11 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    const {
-        id
-    } = req.params;
-    const coop = await Coop.findByIdAndUpdate(id, {
+    const {id} = req.params;
+    await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
-    });
-    res.redirect(`/coops/${coop._id}`);
+    })
+    .then(coop => res.redirect(`/coops/${coop._id}`));
 });
 
 // Delete
