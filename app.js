@@ -1,9 +1,8 @@
 const express = require('express');
+const http = require('http');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-const ejs = require('ejs');
 const path = require('path');
-const ejsMate = require('ejs-mate');
 
 const coops = require('./routes/coops')
 
@@ -20,9 +19,7 @@ db.once("open", () => {
 });
 
 const app = express();
-app.engine('ejs', ejsMate);
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
@@ -30,7 +27,7 @@ app.use(express.urlencoded({ extended: true}));
 // Routes /////////////////////////
 
 app.get('/', function (req, res) {
-  res.render('home');
+  res.render('home.html');
 })
 
 app.use('/coops', coops)

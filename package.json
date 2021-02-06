@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "bootstrap": "^5.0.0-beta1",
     "ejs": "^3.1.5",
     "ejs-mate": "^3.0.0",
