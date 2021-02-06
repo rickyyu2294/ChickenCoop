@@ -1,25 +1,24 @@
 'use strict';
 
-const e = React.createElement;
+import Header from './components/header.js'
 
-class LikeButton extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { liked: false };
   }
 
   render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-
-    return e(
-      'button',
-      { onClick: () => this.setState({ liked: true }) },
-      'Like'
+    return (
+      <div>
+        <Header />
+        <button onClick={() => this.setState({ liked: true }) }>
+          Like
+        </button>
+      </div>
+      
     );
   }
 }
 
 const domContainer = document.querySelector('#root');
-ReactDOM.render(e(LikeButton), domContainer);
+ReactDOM.render(<Home />, domContainer);
