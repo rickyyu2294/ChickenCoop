@@ -3,11 +3,11 @@
 <div class="row">
     <h1 class="text-center">New Coop</h1>
     <div class="col-6 offset-3">
-        <form action="/coops" method="POST">
+        <form class="needs-validation" action="/coops" method="POST" novalidate>
             <div class="mb-3">
                 <div class="mb-3">
-                    <label class="form-label" for="name">Name</label>
-                    <input class="form-control" type="text" id="name" name="coop[name]">
+                    <label class="form-label" for="name">Name*</label>
+                    <input class="form-control" type="text" id="name" name="coop[name]" required>
                 </div>
         
                 <div class="mb-3">
@@ -19,6 +19,8 @@
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" type="text" id="description" name="coop[description]"></textarea>
                 </div>
+
+                <p>* required</p>
         
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Submit</button>
