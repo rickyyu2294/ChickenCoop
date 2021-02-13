@@ -3,6 +3,20 @@ const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const router = express.Router();
 const catchAsync = require("../utils/CatchAsync");
+const Joi = require("joi");
+const ExpressError = require('../utils/ExpressError');
+const {coopSchema} = require('../schemas.js');
+
+const validateCoop = (req, res, next) => {
+    // Validate coop parameters received from post request
+    const {error} = coopSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(', ');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+};
 
 // Index
 router.get('/', catchAsync(async (req, res) => {
@@ -17,7 +31,8 @@ router.get('/new', catchAsync(async (req, res) => {
     res.render('coops/new');
 }));
 
-router.post('/', catchAsync(async (req, res) => {
+router.post('/', validateCoop, catchAsync(async (req, res) => {
+    // Create and save new coop
     const coop = new Coop(req.body.coop);
     await coop.save();
 
@@ -40,7 +55,7 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
     });
 }));
 
-router.put('/:id', catchAsync(async (req, res) => {
+router.put('/:id', validateCoop, catchAsync(async (req, res) => {
     const {id} = req.params;
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop

@@ -7,6 +7,7 @@ const Coop = require("./models/coopModel");
 const catchAsync = require("./utils/CatchAsync");
 const ejsMate = require('ejs-mate');
 const CoopRoutes = require('./routes/coopsRoutes.js');
+const ExpressError = require('./utils/ExpressError');
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParse: true,
@@ -38,11 +39,13 @@ app.use('/coops', CoopRoutes);
 // Error handler
 
 app.all('*', (req, res, next) => {
-  res.send("404");
+  next(new ExpressError('Page Not Found', 404));
 });
 
 app.use((err, req, res, next) => {
-  res.send('Something went wrong!');
+  const {statusCode = 500, message = 'Something Went Wrong'} = err;
+  if (!err.message) err.message = "Something Went Wrong";
+  res.status(statusCode).render('error', {err});
 });
  
 // Start Server
