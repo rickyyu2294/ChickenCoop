@@ -1,9 +1,10 @@
-;const express = require('express')
+const express = require('express');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejs = require('ejs');
 const path = require('path');
 const Coop = require("./models/coopModel");
+const catchAsync = require("./utils/CatchAsync");
 const ejsMate = require('ejs-mate');
 const CoopRoutes = require('./routes/coopsRoutes.js');
 
@@ -26,7 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true}));
 
-// Routes /////////////////////////
+// Routes 
 
 app.get('/', function (req, res) {
   res.render('home');
@@ -34,11 +35,13 @@ app.get('/', function (req, res) {
 
 app.use('/coops', CoopRoutes);
 
+// Error handler
+
 app.use((err, req, res, next) => {
   res.send('Something went wrong!');
 });
  
-// Start Server /////////////////////////
+// Start Server
 
 app.listen(3000, () => {
     console.log("Listening on port 3000");
