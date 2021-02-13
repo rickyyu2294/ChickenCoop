@@ -37,6 +37,10 @@ app.use('/coops', CoopRoutes);
 
 // Error handler
 
+app.all('*', (req, res, next) => {
+  res.send("404");
+});
+
 app.use((err, req, res, next) => {
   res.send('Something went wrong!');
 });
