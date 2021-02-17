@@ -73,4 +73,11 @@ router.delete('/:id/delete', catchAsync(async (req, res) => {
     res.redirect('/coops');
 }));
 
+// Chickens
+
+router.post('/:id/chickens', catchAsync(async (req, res) => {
+    const coop = await Coop.findById(req.params.id);
+    const chicken = new Chicken(req.body.chicken);
+}));
+
 module.exports = router;
