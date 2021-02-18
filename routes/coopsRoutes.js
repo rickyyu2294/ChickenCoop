@@ -76,7 +76,8 @@ router.delete('/:id/delete', catchAsync(async (req, res) => {
 // Chickens
 
 // Add
-router.post('/:id/chickens', catchAsync(async (req, res) => {
+router.get('/:id/chicken')
+router.post('/:id/chicken', catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     const chicken = new Chicken(req.body.chicken);
 

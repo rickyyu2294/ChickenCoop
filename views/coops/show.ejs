@@ -16,11 +16,11 @@
 
         <div class="card">
             <div class="card-body">
-                <form action="/coops/<%=coop._id%>/chickens" method="POST">
+                <form class="needs-validation" action="/coops/<%=coop._id%>/chicken" method="POST" novalidate>
                     <h4>Add Chicken</h4>
                     <div class="mb-3">
                         <label class="form-label" for="name">Name</label>
-                        <input type="text" id="name" class="form-control" name="chicken[name]">
+                        <input type="text" id="name" class="form-control" name="chicken[name]" required>
                     </div>
 
                     <div class="mb-3">
@@ -35,11 +35,11 @@
 
                     <div class="form-check">
                         <label class="form-check-label" for="male">Male</label>
-                        <input type="radio" id="male" class="form-check-input" name="chicken[gender]" value="male">
+                        <input type="radio" id="male" class="form-check-input" name="chicken[gender]" value="male" required>
                     </div>
                     <div class="form-check mb-3">
                         <label class="form-check-label" for="female">Female</label>
-                        <input type="radio" id="female" class="form-check-input" name="chicken[gender]" value="female">
+                        <input type="radio" id="female" class="form-check-input" name="chicken[gender]" value="female" required>
                     </div>
 
                     <div class="mb-3">
