@@ -75,9 +75,15 @@ router.delete('/:id/delete', catchAsync(async (req, res) => {
 
 // Chickens
 
+// Add
 router.post('/:id/chickens', catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     const chicken = new Chicken(req.body.chicken);
+
+    coop.chickens.push(chicken);
+    await chicken.save();
+    await coop.save();
+    res.redirect(`/coops/${coop._id}`);
 }));
 
 module.exports = router;
