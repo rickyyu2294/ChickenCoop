@@ -5,7 +5,7 @@ const router = express.Router();
 const catchAsync = require("../utils/CatchAsync");
 const Joi = require("joi");
 const ExpressError = require('../utils/ExpressError');
-const {coopSchema} = require('../schemas.js');
+const {coopSchema, chickenSchema} = require('../schemas.js');
 
 const validateCoop = (req, res, next) => {
     // Validate coop parameters received from post request
@@ -17,6 +17,16 @@ const validateCoop = (req, res, next) => {
         next();
     }
 };
+
+const validateChicken = (req, res, next) => {
+    const {error} = chickenSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(e => e.message).join(', ');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
 
 // Index
 router.get('/', catchAsync(async (req, res) => {
@@ -76,8 +86,7 @@ router.delete('/:id/delete', catchAsync(async (req, res) => {
 // Chickens
 
 // Add
-router.get('/:id/chicken')
-router.post('/:id/chicken', catchAsync(async (req, res) => {
+router.post('/:id/chicken', validateChicken, catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     const chicken = new Chicken(req.body.chicken);
 
