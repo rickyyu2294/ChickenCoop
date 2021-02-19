@@ -51,7 +51,8 @@ router.post('/', validateCoop, catchAsync(async (req, res) => {
 
 // Show
 router.get('/:id', catchAsync(async (req, res, next) => {
-    const coop = await Coop.findById(req.params.id);
+    const coop = await Coop.findById(req.params.id).populate('chickens');
+    console.log(coop);
     res.render('coops/show', {
         coop
     });
