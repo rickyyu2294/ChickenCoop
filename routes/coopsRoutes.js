@@ -99,7 +99,6 @@ router.post('/:id/chickens', validateChicken, catchAsync(async (req, res) => {
 // Delete
 router.delete('/:id/chickens/:chickenid/', catchAsync(async (req, res) => {
     const {id, chickenid} = req.params;
-    await Coop.
     await Coop.findByIdAndUpdate(id, {$pull: {chickens: chickenid}});
     await Chicken.findByIdAndDelete(chickenid);
     res.redirect(`/coops/${id}`);
