@@ -52,7 +52,6 @@ router.post('/', validateCoop, catchAsync(async (req, res) => {
 // Show
 router.get('/:id', catchAsync(async (req, res, next) => {
     const coop = await Coop.findById(req.params.id).populate('chickens');
-    console.log(coop);
     res.render('coops/show', {
         coop
     });
@@ -87,7 +86,7 @@ router.delete('/:id/delete', catchAsync(async (req, res) => {
 // Chickens
 
 // Add
-router.post('/:id/chicken', validateChicken, catchAsync(async (req, res) => {
+router.post('/:id/chickens', validateChicken, catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     const chicken = new Chicken(req.body.chicken);
 
@@ -95,6 +94,14 @@ router.post('/:id/chicken', validateChicken, catchAsync(async (req, res) => {
     await chicken.save();
     await coop.save();
     res.redirect(`/coops/${coop._id}`);
+}));
+
+// Delete
+router.delete('/:id/chickens/:chickenid/', catchAsync(async (req, res) => {
+    const {id, chickenid} = req.params;
+    await Coop.findByIdAndUpdate(id, {$pull: {chickens: chickenid}});
+    await Chicken.findByIdAndDelete(chickenid);
+    res.redirect(`/coops/${id}`);
 }));
 
 module.exports = router;

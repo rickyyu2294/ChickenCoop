@@ -16,7 +16,7 @@
 
         <div class="card my-3">
             <div class="card-body">
-                <form class="needs-validation" action="/coops/<%=coop._id%>/chicken" method="POST" novalidate>
+                <form class="needs-validation" action="/coops/<%=coop._id%>/chickens" method="POST" novalidate>
                     <h4>Add Chicken</h4>
                     <div class="mb-3">
                         <label class="form-label" for="name">Name</label>
@@ -53,11 +53,14 @@
         </div>
     </div>
     <div class="col-6">
-        <% for (let chicken of coop.chickens) {%> 
+        <% for (let chicken of coop.chickens) { %> 
             <div class="card my-3">
                 <div class="card-body">
                     <h3 class="card-title"><%=chicken.name%> </h3>   
-                    <p class="card-text"><%=chicken.description%> </p>    
+                    <p class="card-text"><%=chicken.description%> </p>   
+                    <form action="/coops/<%=coop._id%>/chickens/<%=chicken._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form> 
                 </div>
             </div>
         <% } %>
