@@ -10,9 +10,10 @@ const CoopRoutes = require('./routes/coopsRoutes.js');
 const ExpressError = require('./utils/ExpressError');
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
-  useNewUrlParse: true,
+  useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedParser: true,
+  useUnifiedTopology: true,
   useFindAndModify: false
 });
 
