@@ -12,7 +12,8 @@ const ExpressError = require('./utils/ExpressError');
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParse: true,
   useCreateIndex: true,
-  useUnifiedParser: true
+  useUnifiedParser: true,
+  useFindAndModify: false
 });
 
 const db = mongoose.connection;
