@@ -1,0 +1,41 @@
+const express = require('express');
+const Coop = require('../models/coopModel')
+const Chicken = require('../models/chickenModel')
+const catchAsync = require("../utils/CatchAsync");
+const Joi = require("joi");
+const ExpressError = require('../utils/ExpressError');
+const {chickenSchema} = require('../schemas.js');
+
+const validateChicken = (req, res, next) => {
+    const {error} = chickenSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(e => e.message).join(', ');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
+
+const router = express.Router({mergeParams: true});
+
+// Add
+router.post('/', validateChicken, catchAsync(async (req, res) => {
+    const coop = await Coop.findById(req.params.id);
+    const chicken = new Chicken(req.body.chicken);
+
+    coop.chickens.push(chicken);
+    await chicken.save();
+    await coop.save();
+    res.redirect(`/coops/${coop._id}`);
+}));
+
+// Delete
+router.delete('/:chickenid/', catchAsync(async (req, res) => {
+    const {id, chickenid} = req.params;
+    console.log(id);
+    await Coop.findByIdAndUpdate(id, {$pull: {chickens: chickenid}});
+    await Chicken.findByIdAndDelete(chickenid);
+    res.redirect(`/coops/${id}`);
+}));
+
+module.exports = router;

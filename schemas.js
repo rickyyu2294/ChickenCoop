@@ -14,6 +14,6 @@ module.exports.chickenSchema = Joi.object({
         image: Joi.string().allow('').allow(null),
         description: Joi.string().allow('').allow(null),
         gender: Joi.string().required(),
-        birthdate: Joi.date(),
+        birthdate: Joi.date().required(),
     }).required()
 });
