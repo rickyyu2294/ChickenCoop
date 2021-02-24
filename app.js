@@ -38,6 +38,9 @@ const sessionConfig = {
   secret: 'mySecret',
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 1000 * 360 * 24 * 7
+  }
 }
 app.use(session(sessionConfig));
 
