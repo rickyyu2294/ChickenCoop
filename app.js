@@ -5,6 +5,7 @@ const ejs = require('ejs');
 const path = require('path');
 const Coop = require("./models/coopModel");
 const catchAsync = require("./utils/CatchAsync");
+const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
 const CoopRoutes = require('./routes/coopsRoutes.js');
 const ChickenRoutes = require('./routes/chickenRoutes.js')
@@ -28,6 +29,7 @@ const app = express();
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true}));
 
