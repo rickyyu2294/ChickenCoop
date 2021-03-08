@@ -35,10 +35,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true}));
 
+const WEEK_MILISECONDS = 1000 * 60 * 60 * 24 * 7;
 const sessionConfig = {
   secret: 'thisshouldbeabettersecret!',
   resave:false,
   saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + WEEK_MILISECONDS,
+    maxAge: WEEK_MILISECONDS
+  }
 };
 app.use(session(sessionConfig));
 
