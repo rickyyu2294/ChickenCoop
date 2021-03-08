@@ -10,6 +10,7 @@ const ejsMate = require('ejs-mate');
 const CoopRoutes = require('./routes/coopsRoutes.js');
 const ChickenRoutes = require('./routes/chickenRoutes.js')
 const ExpressError = require('./utils/ExpressError');
+const session = require('express-session');
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParser: true,
@@ -33,6 +34,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true}));
+
+const sessionConfig = {
+  secret: 'thisshouldbeabettersecret!',
+  resave:false,
+  saveUninitialized: true,
+};
+app.use(session(sessionConfig));
 
 // Routes 
 
