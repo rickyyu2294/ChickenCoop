@@ -26,6 +26,7 @@ router.post('/', validateChicken, catchAsync(async (req, res) => {
     coop.chickens.push(chicken);
     await chicken.save();
     await coop.save();
+    req.flash('success', 'Successfully added chicken to coop');
     res.redirect(`/coops/${coop._id}`);
 }));
 
@@ -35,6 +36,7 @@ router.delete('/:chickenid/', catchAsync(async (req, res) => {
     console.log(id);
     await Coop.findByIdAndUpdate(id, {$pull: {chickens: chickenid}});
     await Chicken.findByIdAndDelete(chickenid);
+    req.flash('success', 'Successfully removed chicken from coop');
     res.redirect(`/coops/${id}`);
 }));
 
