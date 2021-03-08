@@ -36,6 +36,7 @@ router.post('/', validateCoop, catchAsync(async (req, res) => {
     // Create and save new coop
     const coop = new Coop(req.body.coop);
     await coop.save();
+    req.flash('success', 'Successfully created new coop');
 
     res.redirect(`/coops/${coop._id}`);
 }));
