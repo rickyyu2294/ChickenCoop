@@ -44,6 +44,11 @@ router.post('/', validateCoop, catchAsync(async (req, res) => {
 // Show
 router.get('/:id', catchAsync(async (req, res, next) => {
     const coop = await Coop.findById(req.params.id).populate('chickens');
+    if (!coop) {
+        req.flash('error', 'Coop could not be found');
+        res.redirect('/coops');
+        return;
+    }
     res.render('coops/show', {
         coop
     });
@@ -52,6 +57,11 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 // Edit
 router.get('/:id/edit', catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
+    if (!coop) {
+        req.flash('error', 'Coop could not be found');
+        res.redirect('/coops');
+        return;
+    }
     res.render('coops/edit', {
         coop
     });
