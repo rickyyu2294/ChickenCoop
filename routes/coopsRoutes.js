@@ -62,7 +62,10 @@ router.put('/:id', validateCoop, catchAsync(async (req, res) => {
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
     })
-    .then(coop => res.redirect(`/coops/${coop._id}`));
+    .then(coop => {
+        req.flash('success', 'Successfully updated coop');
+        res.redirect(`/coops/${coop._id}`)
+    });
 }));
 
 // Delete
