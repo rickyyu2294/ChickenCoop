@@ -7,7 +7,11 @@ const catchAsync = require("../utils/CatchAsync");
 const User = require('../models/userModel');
 
 router.get('/register', (req, res) => {
-    res.render('users/register')
+    res.render('users/register');
+});
+
+router.post('/', (req, res) => {
+    res.send('new user');
 });
 
 module.exports = router;
