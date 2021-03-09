@@ -3,14 +3,18 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejs = require('ejs');
 const path = require('path');
-const Coop = require("./models/coopModel");
 const catchAsync = require("./utils/CatchAsync");
 const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
+const session = require('express-session');
+
+const ExpressError = require('./utils/ExpressError');
+
+const Coop = require("./models/coopModel");
 const CoopRoutes = require('./routes/coopsRoutes.js');
 const ChickenRoutes = require('./routes/chickenRoutes.js')
-const ExpressError = require('./utils/ExpressError');
-const session = require('express-session');
+
+
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParser: true,
