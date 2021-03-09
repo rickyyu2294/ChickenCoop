@@ -12,10 +12,10 @@ const passportLocal = require('passport-local');
 
 const ExpressError = require('./utils/ExpressError');
 const Coop = require("./models/coopModel");
-const CoopRoutes = require('./routes/coopsRoutes.js');
-const ChickenRoutes = require('./routes/chickenRoutes.js')
-const User = require('./models/user');
-
+const User = require('./models/userModel');
+const CoopRoutes = require('./routes/coopsRoutes');
+const ChickenRoutes = require('./routes/chickenRoutes')
+const UserRoutes = require('./routes/userRoutes');
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
   useNewUrlParser: true,
@@ -75,6 +75,7 @@ app.get('/', function (req, res) {
 
 app.use('/coops', CoopRoutes);
 app.use('/coops/:id/chickens', ChickenRoutes);
+app.use('/users', UserRoutes);
 
 // Error handler
 

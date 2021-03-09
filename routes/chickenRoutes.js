@@ -1,9 +1,11 @@
 const express = require('express');
-const Coop = require('../models/coopModel')
-const Chicken = require('../models/chickenModel')
-const catchAsync = require("../utils/CatchAsync");
 const Joi = require("joi");
 const ExpressError = require('../utils/ExpressError');
+const router = express.Router({mergeParams: true});
+const catchAsync = require("../utils/CatchAsync");
+
+const Coop = require('../models/coopModel')
+const Chicken = require('../models/chickenModel')
 const {chickenSchema} = require('../schemas.js');
 
 const validateChicken = (req, res, next) => {
@@ -16,7 +18,7 @@ const validateChicken = (req, res, next) => {
     }
 }
 
-const router = express.Router({mergeParams: true});
+
 
 // Add
 router.post('/', validateChicken, catchAsync(async (req, res) => {
