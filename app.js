@@ -7,13 +7,14 @@ const catchAsync = require("./utils/CatchAsync");
 const flash = require('connect-flash');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('passport-local');
 
 const ExpressError = require('./utils/ExpressError');
-
 const Coop = require("./models/coopModel");
 const CoopRoutes = require('./routes/coopsRoutes.js');
 const ChickenRoutes = require('./routes/chickenRoutes.js')
-
+const User = require('./models/user');
 
 
 mongoose.connect('mongodb://localhost:27017/chicken-coop', {
@@ -35,11 +36,6 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(methodOverride('_method'));
-app.use(express.urlencoded({ extended: true}));
-app.use(flash());
-
 const WEEK_MILISECONDS = 1000 * 60 * 60 * 24 * 7;
 const sessionConfig = {
   secret: 'thisshouldbeabettersecret!',
@@ -52,6 +48,16 @@ const sessionConfig = {
   }
 };
 app.use(session(sessionConfig));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: true}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new passportLocal(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Middleware
 
