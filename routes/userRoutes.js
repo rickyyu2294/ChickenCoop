@@ -10,8 +10,16 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
-router.post('/', (req, res) => {
-    res.send('new user');
-});
+router.post('/register', catchAsync(async(req, res) => {
+    const {email, username, password} = req.body.user;
+    const user = new User({
+        email, 
+        username
+    });
+    const registeredUser = await User.register(user, password);
+    console.log(registeredUser);
+    req.flash('success', 'New Account Created');
+    res.redirect('/coops');
+}));
 
 module.exports = router;
