@@ -16,10 +16,15 @@ router.post('/register', catchAsync(async(req, res) => {
         email, 
         username
     });
-    const registeredUser = await User.register(user, password);
-    console.log(registeredUser);
-    req.flash('success', 'New Account Created');
-    res.redirect('/coops');
+    try {
+        const registeredUser = await User.register(user, password);
+        console.log(registeredUser);
+        req.flash('success', 'New Account Created');
+        res.redirect('/coops');
+    } catch (e) {
+        req.flash('error', e.message);
+        res.redirect('/users/register');
+    }
 }));
 
 module.exports = router;
