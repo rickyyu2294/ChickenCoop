@@ -41,4 +41,12 @@ router.post('/login', passport.authenticate('local', {failureFlash: true, failur
     res.redirect('/coops');
 });
 
+// Logout
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success', "You have logged out.");
+    res.redirect('/');
+});
+
 module.exports = router;
