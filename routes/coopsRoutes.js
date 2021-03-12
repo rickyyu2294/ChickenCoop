@@ -2,6 +2,7 @@ const express = require('express');
 const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const catchAsync = require("../utils/CatchAsync");
+const {isLoggedIn} = require("../utils/middleware");
 const Joi = require("joi");
 const ExpressError = require('../utils/ExpressError');
 const {coopSchema} = require('../schemas.js');
@@ -28,11 +29,11 @@ router.get('/', catchAsync(async (req, res) => {
 }));
 
 // New
-router.get('/new', catchAsync(async (req, res) => {
+router.get('/new', isLoggedIn, catchAsync(async (req, res) => {
     res.render('coops/new');
 }));
 
-router.post('/', validateCoop, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateCoop, catchAsync(async (req, res) => {
     // Create and save new coop
     const coop = new Coop(req.body.coop);
     await coop.save();
@@ -55,7 +56,7 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 }));
 
 // Edit
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     if (!coop) {
         req.flash('error', 'Coop could not be found');
@@ -67,7 +68,7 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
     });
 }));
 
-router.put('/:id', validateCoop, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validateCoop, catchAsync(async (req, res) => {
     const {id} = req.params;
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
@@ -79,7 +80,7 @@ router.put('/:id', validateCoop, catchAsync(async (req, res) => {
 }));
 
 // Delete
-router.delete('/:id/delete', catchAsync(async (req, res) => {
+router.delete('/:id/delete', isLoggedIn, catchAsync(async (req, res) => {
     const {
         id
     } = req.params;
