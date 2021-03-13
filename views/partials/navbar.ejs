@@ -16,15 +16,21 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/users/login">Login</a>
-          </li>
-          <li>
-            <a class="nav-link" href="/users/register">Register</a>
-          </li>
-          <li>
-            <a class="nav-link" href="/users/logout">Logout</a>
-          </li>
+          <% if (!user) { %> 
+            <li class="nav-item">
+              <a class="nav-link" href="/users/login">Login</a>
+            </li>
+            <li>
+              <a class="nav-link" href="/users/register">Register</a>
+            </li>
+          <% } else { %> 
+            <li class="navbar-text">
+              <%=user.username%>  |
+            </li>
+            <li>
+              <a class="nav-link" href="/users/logout">Logout</a>
+            </li>
+          <% } %> 
         </ul>
     </div>
   </nav>
