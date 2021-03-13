@@ -13,7 +13,7 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
-router.post('/register', catchAsync(async(req, res) => {
+router.post('/register', catchAsync(async(req, res, next) => {
     const {email, username, password} = req.body;
     const user = new User({
         email, 
@@ -22,8 +22,13 @@ router.post('/register', catchAsync(async(req, res) => {
     try {
         const registeredUser = await User.register(user, password);
         console.log(registeredUser);
-        req.flash('success', 'New Account Created');
-        res.redirect('/');
+        req.login(registeredUser, err => {
+            if (err) {
+                return next(err);
+            }
+            req.flash('success', 'New Account Created');
+            res.redirect('/');
+        });
     } catch (e) {
         req.flash('error', e.message);
         res.redirect('/users/register');
@@ -38,7 +43,9 @@ router.get('/login', (req, res) => {
 
 router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/users/login'}), (req, res) => {
     req.flash('success', 'Welcome Back!');
-    res.redirect('/coops');
+    const redirectUrl = req.session.returnTo || '/coops';
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
 });
 
 // Logout
