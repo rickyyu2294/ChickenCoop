@@ -5,7 +5,11 @@
         <div class="card my-3">
             <img src="<%= coop.image %>" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title"><%= coop.name %></h5>
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title d-flex"><%= coop.name %></h5>
+                    <p class="card-text d-flex "><%= coop.owner.username %> </p>
+                </div>
+                
                 <p class="card-text"><%= coop.description %></p>
                 <a class="btn btn-primary" href="/coops/<%= coop._id %>/edit">Edit</a>
                 <form class="d-inline" action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">

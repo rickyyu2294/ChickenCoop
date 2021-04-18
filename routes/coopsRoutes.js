@@ -46,7 +46,7 @@ router.post('/', isLoggedIn, validateCoop, catchAsync(async (req, res) => {
 
 // Show
 router.get('/:id', catchAsync(async (req, res, next) => {
-    const coop = await Coop.findById(req.params.id).populate('chickens');
+    const coop = await Coop.findById(req.params.id).populate('chickens').populate('owner');
     if (!coop) {
         req.flash('error', 'Coop could not be found');
         res.redirect('/coops');
