@@ -12,7 +12,7 @@ const {chickenSchema} = require('../schemas.js');
 router.post('/', isLoggedIn, validateChicken, catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     const chicken = new Chicken(req.body.chicken);
-
+    chicken.owner = req.user._id;
     coop.chickens.push(chicken);
     await chicken.save();
     await coop.save();
