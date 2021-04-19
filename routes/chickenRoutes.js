@@ -3,7 +3,7 @@ const Joi = require("joi");
 const ExpressError = require('../utils/ExpressError');
 const router = express.Router({mergeParams: true});
 const catchAsync = require("../utils/CatchAsync");
-const {isLoggedIn, validateChicken} = require("../utils/middleware");
+const {isLoggedIn, validateChicken, userIsChickenOwner} = require("../utils/middleware");
 const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const {chickenSchema} = require('../schemas.js');
@@ -21,7 +21,7 @@ router.post('/', isLoggedIn, validateChicken, catchAsync(async (req, res) => {
 }));
 
 // Delete
-router.delete('/:chickenid/', isLoggedIn, catchAsync(async (req, res) => {
+router.delete('/:chickenid/', isLoggedIn, userIsChickenOwner, catchAsync(async (req, res) => {
     const {id, chickenid} = req.params;
     console.log(id);
     await Coop.findByIdAndUpdate(id, {$pull: {chickens: chickenid}});

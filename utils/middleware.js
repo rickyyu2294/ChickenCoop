@@ -23,6 +23,18 @@ module.exports.userIsCoopOwner = async (req, res, next) => {
     next();
 }
 
+module.exports.userIsChickenOwner = async (req, res, next) => {
+    const {id, chickenid} = req.params;
+    const coop = await Coop.findById(id);
+    const chicken = await Chicken.findById(chickenid);
+    if (!chicken.owner.equals(req.user._id)) {
+        req.flash('error', 'You are not the owner of this chicken.');
+        return res.redirect(`/coops/${coop._id}`);
+    }
+
+    next();
+}
+
 module.exports.validateCoop = (req, res, next) => {
     // Validate coop parameters received from post request
     const {error} = coopSchema.validate(req.body);

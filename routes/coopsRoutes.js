@@ -2,7 +2,7 @@ const express = require('express');
 const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const catchAsync = require("../utils/CatchAsync");
-const {isLoggedIn, userIsOwner, validateCoop} = require("../utils/middleware");
+const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
 const Joi = require("joi");
 
 const router = express.Router();
