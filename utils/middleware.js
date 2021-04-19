@@ -1,4 +1,5 @@
 const Coop = require('../models/coopModel');
+const Chicken = require('../models/chickenModel')
 const ExpressError = require('../utils/ExpressError');
 const {coopSchema, chickenSchema} = require('../schemas.js');
 
@@ -11,7 +12,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 }
 
-module.exports.userIsOwner = async (req, res, next) => {
+module.exports.userIsCoopOwner = async (req, res, next) => {
     const {id} = req.params;
     const coop = await Coop.findById(id);
     if (!coop.owner.equals(req.user._id)) {
