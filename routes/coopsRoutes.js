@@ -45,7 +45,7 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 }));
 
 // Edit
-router.get('/:id/edit', isLoggedIn, userIsOwner, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, userIsCoopOwner, catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     if (!coop) {
         req.flash('error', 'Coop could not be found');
@@ -58,7 +58,7 @@ router.get('/:id/edit', isLoggedIn, userIsOwner, catchAsync(async (req, res) => 
     });
 }));
 
-router.put('/:id', isLoggedIn, userIsOwner, validateCoop, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, userIsCoopOwner, validateCoop, catchAsync(async (req, res) => {
     const {id} = req.params;
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
@@ -70,7 +70,7 @@ router.put('/:id', isLoggedIn, userIsOwner, validateCoop, catchAsync(async (req,
 }));
 
 // Delete
-router.delete('/:id/delete', isLoggedIn, userIsOwner, catchAsync(async (req, res) => {
+router.delete('/:id/delete', isLoggedIn, userIsCoopOwner, catchAsync(async (req, res) => {
     const {
         id
     } = req.params;
