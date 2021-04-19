@@ -7,14 +7,17 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title d-flex"><%= coop.name %></h5>
-                    <p class="card-text d-flex "><%= coop.owner.username %> </p>
+                    <p class="card-text d-flex ">Created by <%= coop.owner.username %> </p>
                 </div>
                 
                 <p class="card-text"><%= coop.description %></p>
-                <a class="btn btn-primary" href="/coops/<%= coop._id %>/edit">Edit</a>
-                <form class="d-inline" action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                </form>
+
+                <% if (user && coop.owner.equals(user._id)) { %> 
+                    <a class="btn btn-primary" href="/coops/<%= coop._id %>/edit">Edit</a>
+                    <form class="d-inline" action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                <% } %> 
             </div>
         </div>        
 
