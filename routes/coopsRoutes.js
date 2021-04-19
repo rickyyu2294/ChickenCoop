@@ -2,7 +2,7 @@ const express = require('express');
 const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const catchAsync = require("../utils/CatchAsync");
-const {isLoggedIn} = require("../utils/middleware");
+const {isLoggedIn, userIsOwner} = require("../utils/middleware");
 const Joi = require("joi");
 const ExpressError = require('../utils/ExpressError');
 const {coopSchema} = require('../schemas.js');
@@ -58,19 +58,20 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 }));
 
 // Edit
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, userIsOwner, catchAsync(async (req, res) => {
     const coop = await Coop.findById(req.params.id);
     if (!coop) {
         req.flash('error', 'Coop could not be found');
         res.redirect('/coops');
         return;
     }
+
     res.render('coops/edit', {
         coop
     });
 }));
 
-router.put('/:id', isLoggedIn, validateCoop, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, userIsOwner, validateCoop, catchAsync(async (req, res) => {
     const {id} = req.params;
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
@@ -82,7 +83,7 @@ router.put('/:id', isLoggedIn, validateCoop, catchAsync(async (req, res) => {
 }));
 
 // Delete
-router.delete('/:id/delete', isLoggedIn, catchAsync(async (req, res) => {
+router.delete('/:id/delete', isLoggedIn, userIsOwner, catchAsync(async (req, res) => {
     const {
         id
     } = req.params;
