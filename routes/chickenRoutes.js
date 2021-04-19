@@ -3,20 +3,10 @@ const Joi = require("joi");
 const ExpressError = require('../utils/ExpressError');
 const router = express.Router({mergeParams: true});
 const catchAsync = require("../utils/CatchAsync");
-const {isLoggedIn} = require("../utils/middleware");
+const {isLoggedIn, validateChicken} = require("../utils/middleware");
 const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const {chickenSchema} = require('../schemas.js');
-
-const validateChicken = (req, res, next) => {
-    const {error} = chickenSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(e => e.message).join(', ');
-        throw new ExpressError(msg, 400);
-    } else {
-        next();
-    }
-}
 
 // Add
 router.post('/', isLoggedIn, validateChicken, catchAsync(async (req, res) => {

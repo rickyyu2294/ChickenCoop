@@ -1,6 +1,6 @@
 const Coop = require('../models/coopModel');
 const ExpressError = require('../utils/ExpressError');
-const {coopSchema} = require('../schemas.js');
+const {coopSchema, chickenSchema} = require('../schemas.js');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -32,3 +32,13 @@ module.exports.validateCoop = (req, res, next) => {
         next();
     }
 };
+
+module.exports.validateChicken = (req, res, next) => {
+    const {error} = chickenSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(e => e.message).join(', ');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
