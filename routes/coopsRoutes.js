@@ -2,21 +2,8 @@ const express = require('express');
 const Coop = require('../models/coopModel')
 const Chicken = require('../models/chickenModel')
 const catchAsync = require("../utils/CatchAsync");
-const {isLoggedIn, userIsOwner} = require("../utils/middleware");
+const {isLoggedIn, userIsOwner, validateCoop} = require("../utils/middleware");
 const Joi = require("joi");
-const ExpressError = require('../utils/ExpressError');
-const {coopSchema} = require('../schemas.js');
-
-const validateCoop = (req, res, next) => {
-    // Validate coop parameters received from post request
-    const {error} = coopSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(', ');
-        throw new ExpressError(msg, 400);
-    } else {
-        next();
-    }
-};
 
 const router = express.Router();
 

@@ -1,4 +1,6 @@
-const Coop = require('../models/coopModel')
+const Coop = require('../models/coopModel');
+const ExpressError = require('../utils/ExpressError');
+const {coopSchema} = require('../schemas.js');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -19,3 +21,14 @@ module.exports.userIsOwner = async (req, res, next) => {
 
     next();
 }
+
+module.exports.validateCoop = (req, res, next) => {
+    // Validate coop parameters received from post request
+    const {error} = coopSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(', ');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+};
