@@ -1,5 +1,6 @@
 const express = require('express');
 const Coop = require('../models/coopModel')
+const coops = require('../controllers/coops')
 const Chicken = require('../models/chickenModel')
 const catchAsync = require("../utils/CatchAsync");
 const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
@@ -8,75 +9,22 @@ const Joi = require("joi");
 const router = express.Router();
 
 // Index
-router.get('/', catchAsync(async (req, res) => {
-    const coops = await Coop.find();
-    res.render('coops/index', {
-        coops
-    });
-}));
+router.get('/', catchAsync(coops.index));
 
 // New
-router.get('/new', isLoggedIn, catchAsync(async (req, res) => {
-    res.render('coops/new');
-}));
+router.get('/new', isLoggedIn, catchAsync(coops.newForm));
 
-router.post('/', isLoggedIn, validateCoop, catchAsync(async (req, res) => {
-    // Create and save new coop
-    const coop = new Coop(req.body.coop);
-    coop.owner = req.user._id;
-    console.log(coop);
-    await coop.save();
-    req.flash('success', 'Successfully created new coop');
-
-    res.redirect(`/coops/${coop._id}`);
-}));
+router.post('/', isLoggedIn, validateCoop, catchAsync(coops.new));
 
 // Show
-router.get('/:id', catchAsync(async (req, res, next) => {
-    const coop = await Coop.findById(req.params.id).populate('chickens').populate('owner');
-    if (!coop) {
-        req.flash('error', 'Coop could not be found');
-        res.redirect('/coops');
-        return;
-    }
-    res.render('coops/show', {
-        coop
-    });
-}));
+router.get('/:id', catchAsync(coops.show));
 
 // Edit
-router.get('/:id/edit', isLoggedIn, userIsCoopOwner, catchAsync(async (req, res) => {
-    const coop = await Coop.findById(req.params.id);
-    if (!coop) {
-        req.flash('error', 'Coop could not be found');
-        res.redirect('/coops');
-        return;
-    }
+router.get('/:id/edit', isLoggedIn, userIsCoopOwner, catchAsync(coops.editForm));
 
-    res.render('coops/edit', {
-        coop
-    });
-}));
-
-router.put('/:id', isLoggedIn, userIsCoopOwner, validateCoop, catchAsync(async (req, res) => {
-    const {id} = req.params;
-    await Coop.findByIdAndUpdate(id, {
-        ...req.body.coop
-    })
-    .then(coop => {
-        req.flash('success', 'Successfully updated coop');
-        res.redirect(`/coops/${coop._id}`)
-    });
-}));
+router.put('/:id', isLoggedIn, userIsCoopOwner, validateCoop, catchAsync(coops.edit));
 
 // Delete
-router.delete('/:id/delete', isLoggedIn, userIsCoopOwner, catchAsync(async (req, res) => {
-    const {
-        id
-    } = req.params;
-    await Coop.findByIdAndDelete(id);
-
-    res.redirect('/coops');
-}));
+router.delete('/:id/delete', isLoggedIn, userIsCoopOwner, catchAsync(coops.delete));
 
 module.exports = router;
