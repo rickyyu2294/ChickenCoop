@@ -1,5 +1,5 @@
 const express = require('express');
-const chickens = require('../controllers/chickens')
+const chickens = require('../controllers/chickens');
 const router = express.Router({mergeParams: true});
 const catchAsync = require("../utils/CatchAsync");
 const {isLoggedIn, validateChicken, userIsChickenOwner} = require("../utils/middleware");

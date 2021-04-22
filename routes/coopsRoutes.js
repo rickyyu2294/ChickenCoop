@@ -1,8 +1,7 @@
 const express = require('express');
-const coops = require('../controllers/coops')
+const coops = require('../controllers/coops');
 const catchAsync = require("../utils/CatchAsync");
 const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
-
 const router = express.Router();
 
 // Index
