@@ -1,10 +1,5 @@
 const express = require('express');
 const Coop = require('../models/coopModel')
-const coops = require('../controllers/coops')
-const Chicken = require('../models/chickenModel')
-const catchAsync = require("../utils/CatchAsync");
-const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
-const Joi = require("joi");
 
 module.exports.index = async (req, res) => {
     const coops = await Coop.find();
