@@ -16,7 +16,6 @@ module.exports.new = async (req, res) => {
     // Create and save new coop
     const coop = new Coop(req.body.coop);
     coop.owner = req.user._id;
-    console.log(coop);
     await coop.save();
     req.flash('success', 'Successfully created new coop');
 

@@ -15,7 +15,6 @@ module.exports.new = async (req, res) => {
 
 module.exports.delete = async (req, res) => {
     const {id, chickenid} = req.params;
-    console.log(id);
     await Coop.findByIdAndUpdate(id, {$pull: {chickens: chickenid}});
     await Chicken.findByIdAndDelete(chickenid);
     req.flash('success', 'Successfully removed chicken from coop');
