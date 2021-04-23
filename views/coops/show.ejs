@@ -14,7 +14,7 @@
 
                 <% if (user && coop.owner.equals(user._id)) { %> 
                     <a class="btn btn-primary" href="/coops/<%= coop._id %>/edit">Edit</a>
-                    <form class="d-inline" action="/coops/<%= coop._id %>/delete?_method=Delete" method="POST">
+                    <form class="d-inline" action="/coops/<%= coop._id %>?_method=Delete" method="POST">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                 <% } %> 

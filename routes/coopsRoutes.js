@@ -4,23 +4,17 @@ const catchAsync = require("../utils/CatchAsync");
 const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
 const router = express.Router();
 
-// Index
-router.get('/', catchAsync(coops.index));
+router.route('/')
+    .get(catchAsync(coops.index))
+    .post(isLoggedIn, validateCoop, catchAsync(coops.new));
 
-// New
 router.get('/new', isLoggedIn, catchAsync(coops.newForm));
 
-router.post('/', isLoggedIn, validateCoop, catchAsync(coops.new));
-
-// Show
-router.get('/:id', catchAsync(coops.show));
-
-// Edit
 router.get('/:id/edit', isLoggedIn, userIsCoopOwner, catchAsync(coops.editForm));
 
-router.put('/:id', isLoggedIn, userIsCoopOwner, validateCoop, catchAsync(coops.edit));
-
-// Delete
-router.delete('/:id/delete', isLoggedIn, userIsCoopOwner, catchAsync(coops.delete));
+router.route('/:id')
+    .get(catchAsync(coops.show))
+    .put(isLoggedIn, userIsCoopOwner, validateCoop, catchAsync(coops.edit))
+    .delete(isLoggedIn, userIsCoopOwner, catchAsync(coops.delete));
 
 module.exports = router;
