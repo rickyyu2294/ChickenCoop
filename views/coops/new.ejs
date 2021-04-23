@@ -3,16 +3,16 @@
 <div class="row">
     <h1 class="text-center">New Coop</h1>
     <div class="col-6 offset-3">
-        <form class="needs-validation" action="/coops" method="POST" novalidate>
+        <form class="needs-validation" action="/coops" method="POST" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <div class="mb-3">
                     <label class="form-label" for="name">Name*</label>
                     <input class="form-control" type="text" id="name" name="coop[name]" required>
                 </div>
         
-                <div class="mb-3">
+                <div class="mb-3"></div>
                     <label class="form-label" for="image">Image</label>
-                    <input class="form-control" type="text" id="image" name="coop[image]">
+                    <input class="form-control" type="file" name="image" id="image">
                 </div>
         
                 <div class="mb-3">

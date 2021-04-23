@@ -1,12 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 const coops = require('../controllers/coops');
 const catchAsync = require("../utils/CatchAsync");
 const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
 const router = express.Router();
 
+const upload = multer({dest: 'uploads/' });
+
 router.route('/')
     .get(catchAsync(coops.index))
-    .post(isLoggedIn, validateCoop, catchAsync(coops.new));
+    .post(upload.single('image'), (req, res) => {
+        console.log(req.body);
+        console.log(req.file);
+        res.redirect("/coops");
+    });
+    //.post(isLoggedIn, validateCoop, catchAsync(coops.new));
 
 router.get('/new', isLoggedIn, catchAsync(coops.newForm));
 
