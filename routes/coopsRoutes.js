@@ -1,18 +1,18 @@
 const express = require('express');
-const multer = require('multer');
 const coops = require('../controllers/coops');
 const catchAsync = require("../utils/CatchAsync");
 const {isLoggedIn, userIsCoopOwner, validateCoop} = require("../utils/middleware");
 const router = express.Router();
-
-const upload = multer({dest: 'uploads/' });
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage});
 
 router.route('/')
     .get(catchAsync(coops.index))
-    .post(upload.single('image'), (req, res) => {
+    .post(upload.array('image'), (req, res) => {
         console.log(req.body);
-        console.log(req.file);
-        res.redirect("/coops");
+        console.log(req.files);
+        res.send("it worked?");
     });
     //.post(isLoggedIn, validateCoop, catchAsync(coops.new));
 
