@@ -5,7 +5,12 @@ const Schema = mongoose.Schema;
 
 const CoopSchema = new Schema({
     name: String,
-    image: String,
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
     description: String,
     owner: {type: Schema.Types.ObjectId, ref: 'User'},
     chickens: [{type: Schema.Types.ObjectId, ref: 'Chicken'}]

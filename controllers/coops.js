@@ -12,11 +12,14 @@ module.exports.newForm = async (req, res) => {
     res.render('coops/new');
 };
 
-module.exports.new = async (req, res) => {
+module.exports.new = async (req, res, next) => {
+    
     // Create and save new coop
     const coop = new Coop(req.body.coop);
+    coop.images = req.files.map(f => ({url: f.path, filename: f.filename}));
     coop.owner = req.user._id;
     await coop.save();
+    console.log(coop);
     req.flash('success', 'Successfully created new coop');
 
     res.redirect(`/coops/${coop._id}`);

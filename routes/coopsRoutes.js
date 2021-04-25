@@ -9,12 +9,7 @@ const upload = multer({ storage});
 
 router.route('/')
     .get(catchAsync(coops.index))
-    .post(upload.array('image'), (req, res) => {
-        console.log(req.body);
-        console.log(req.files);
-        res.send("it worked?");
-    });
-    //.post(isLoggedIn, validateCoop, catchAsync(coops.new));
+    .post(isLoggedIn, upload.array('images'), validateCoop, catchAsync(coops.new));
 
 router.get('/new', isLoggedIn, catchAsync(coops.newForm));
 
