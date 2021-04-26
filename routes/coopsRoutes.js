@@ -17,7 +17,7 @@ router.get('/:id/edit', isLoggedIn, userIsCoopOwner, catchAsync(coops.editForm))
 
 router.route('/:id')
     .get(catchAsync(coops.show))
-    .put(isLoggedIn, userIsCoopOwner, validateCoop, catchAsync(coops.edit))
+    .put(isLoggedIn, userIsCoopOwner, upload.array('images'), validateCoop, catchAsync(coops.edit))
     .delete(isLoggedIn, userIsCoopOwner, catchAsync(coops.delete));
 
 module.exports = router;

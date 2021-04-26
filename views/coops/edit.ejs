@@ -2,7 +2,7 @@
 <div class="row">
     <h1 class="text-center">Edit Coop</h1>
     <div class="col-6 offset-3">
-        <form class="needs-validation" action="/coops/<%= coop._id %>?_method=PUT" method="POST" novalidate>
+        <form class="needs-validation" action="/coops/<%= coop._id %>?_method=PUT" method="POST" enctype="multipart/form-data" novalidate>
             <div class="mb-3">
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
@@ -10,8 +10,8 @@
                 </div>
         
                 <div class="mb-3">
-                    <label class="form-label" for="image">Image</label>
-                    <input class="form-control" type="text" id="image" name="coop[image]" value="<%= coop.image %>">
+                    <label class="form-label" for="images">Add Images</label>
+                    <input class="form-control" type="file" id="images" name="images" multiple>
                 </div>
         
                 <div class="mb-3">

@@ -13,7 +13,6 @@ module.exports.newForm = async (req, res) => {
 };
 
 module.exports.new = async (req, res, next) => {
-    
     // Create and save new coop
     const coop = new Coop(req.body.coop);
     coop.images = req.files.map(f => ({url: f.path, filename: f.filename}));
@@ -51,11 +50,14 @@ module.exports.editForm = async (req, res) => {
 };
 
 module.exports.edit = async (req, res) => {
-    const {id} = req.params;
+    const {id} = req.params;    
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
     })
-    .then(coop => {
+    .then(async (coop) => {
+        const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+        coop.images.push(...imgs);
+        await coop.save();
         req.flash('success', 'Successfully updated coop');
         res.redirect(`/coops/${coop._id}`)
     });
