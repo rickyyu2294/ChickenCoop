@@ -76,7 +76,6 @@ module.exports.delete = async (req, res) => {
     } = req.params;
     const coop = await Coop.findById(id);
     for (let image of coop.images) {
-        console.log("MOO " + image.filename);
         await cloudinary.uploader.destroy(image.filename);
     }
     await coop.delete();
