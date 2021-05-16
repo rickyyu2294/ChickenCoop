@@ -4,7 +4,8 @@ module.exports.coopSchema = Joi.object({
     coop: Joi.object({
         name: Joi.string().required(),
         description: Joi.string().allow('', null),
-    }).required()
+    }).required(),
+    deleteImages: Joi.array()
 });
 
 module.exports.chickenSchema = Joi.object({

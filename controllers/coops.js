@@ -1,4 +1,5 @@
 const express = require('express');
+const {cloudinary} = require("../cloudinary");
 const Coop = require('../models/coopModel')
 
 module.exports.index = async (req, res) => {
@@ -50,13 +51,19 @@ module.exports.editForm = async (req, res) => {
 };
 
 module.exports.edit = async (req, res) => {
-    const {id} = req.params;    
+    const {id} = req.params;
     await Coop.findByIdAndUpdate(id, {
         ...req.body.coop
     })
     .then(async (coop) => {
         const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
         coop.images.push(...imgs);
+        if (req.body.deleteImages) {
+            for (let filename of req.body.deleteImages) {
+                await cloudinary.uploader.destroy(filename);
+            }
+            await coop.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}});
+        }
         await coop.save();
         req.flash('success', 'Successfully updated coop');
         res.redirect(`/coops/${coop._id}`)
@@ -67,7 +74,12 @@ module.exports.delete = async (req, res) => {
     const {
         id
     } = req.params;
-    await Coop.findByIdAndDelete(id);
+    const coop = await Coop.findById(id);
+    for (let image of coop.images) {
+        console.log("MOO " + image.filename);
+        await cloudinary.uploader.destroy(image.filename);
+    }
+    await coop.delete();
 
     res.redirect('/coops');
 };

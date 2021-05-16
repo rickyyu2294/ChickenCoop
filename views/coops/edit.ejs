@@ -18,6 +18,16 @@
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" type="text" id="description" name="coop[description]"><%= coop.description %></textarea>
                 </div>
+
+                <div class="mb-3">
+                    <% coop.images.forEach(function(img, i) { %> 
+                        <img class="img-thumbnail" src="<%= img.url %>" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
+                            <label for="image<%= i %>">Delete?</label>
+                        </div>
+                    <% }) %> 
+                </div>
         
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Update</button>
